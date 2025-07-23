@@ -56,10 +56,10 @@ const int PWMLightChannel = 3;
 #define PCLK_GPIO_NUM 22
 
 // connect wifi
-const char *ssid = "ESP_CAM_1";
+const char *ssid = "ESP_CAM_STA";
 const char *password = "12345678";
 // create wifi
-const char *ssid_ap = "ESP_CAM_1";
+const char *ssid_ap = "ESP_CAM";
 const char *password_ap = "12345678";
 
 unsigned long wifiReconnectInterval = 10000;  // 10s
@@ -257,6 +257,42 @@ const char *htmlHomePage PROGMEM = R"HTMLHOMEPAGE(
         var data = key + "," + value;
         websocketCarInput.send(data);
       }
+
+       var keyState = {};
+
+      document.addEventListener("keydown", function(event) {
+        if (keyState[event.code]) return; 
+        keyState[event.code] = true;
+
+        switch(event.code) {
+          case "KeyW":
+            sendButtonInput("MoveCar", "1"); // Tiến
+            break;
+          case "KeyS":
+            sendButtonInput("MoveCar", "2"); // Lùi
+            break;
+          case "KeyA":
+            sendButtonInput("MoveCar", "3"); // Trái
+            break;
+          case "KeyD":
+            sendButtonInput("MoveCar", "4"); // Phải
+            break;
+        }
+      });
+
+      document.addEventListener("keyup", function(event) {
+        if (!keyState[event.code]) return;
+        delete keyState[event.code];
+
+        switch(event.code) {
+          case "KeyW":
+          case "KeyS":
+          case "KeyA":
+          case "KeyD":
+            sendButtonInput("MoveCar", "0"); 
+            break;
+        }
+      });
     
       window.onload = initWebSocket;
       document.getElementById("mainTable").addEventListener("touchend", function(event){
@@ -492,6 +528,7 @@ bool connectToWifiSTA() {
   unsigned long timeoutMs = 8000;
   unsigned long startAttemptTime = millis();
 
+  //use for debug
   while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < timeoutMs) {
     delay(500);
     Serial.print(".");
