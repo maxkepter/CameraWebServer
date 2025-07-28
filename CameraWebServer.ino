@@ -76,195 +76,340 @@ const char *htmlHomePage PROGMEM = R"HTMLHOMEPAGE(
 <!DOCTYPE html>
 <html>
   <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
     <style>
-    .arrows {
-      font-size:40px;
-      color:red;
-    }
-    td.button {
-      background-color:black;
-      border-radius:25%;
-      box-shadow: 5px 5px #888888;
-    }
-    td.button:active {
-      transform: translate(5px,5px);
-      box-shadow: none; 
-    }
+      .arrows {
+        font-size: 40px;
+        color: red;
+      }
+      td.button {
+        background-color: black;
+        border-radius: 25%;
+        box-shadow: 5px 5px #888888;
+      }
+      td.button:active {
+        transform: translate(5px, 5px);
+        box-shadow: none;
+      }
 
-    .noselect {
-      -webkit-touch-callout: none; /* iOS Safari */
+      .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
         -webkit-user-select: none; /* Safari */
-         -khtml-user-select: none; /* Konqueror HTML */
-           -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-                user-select: none; /* Non-prefixed version, currently
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
                                       supported by Chrome and Opera */
-    }
+      }
 
-    .slidecontainer {
-      width: 100%;
-    }
+      .slidecontainer {
+        width: 100%;
+      }
 
-    .slider {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 15px;
-      border-radius: 5px;
-      background: #d3d3d3;
-      outline: none;
-      opacity: 0.7;
-      -webkit-transition: .2s;
-      transition: opacity .2s;
-    }
+      .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 15px;
+        border-radius: 5px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: 0.2s;
+        transition: opacity 0.2s;
+      }
 
-    .slider:hover {
-      opacity: 1;
-    }
-  
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      background: red;
-      cursor: pointer;
-    }
+      .slider:hover {
+        opacity: 1;
+      }
 
-    .slider::-moz-range-thumb {
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      background: red;
-      cursor: pointer;
-    }
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: red;
+        cursor: pointer;
+      }
 
+      .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: red;
+        cursor: pointer;
+      }
     </style>
-  
   </head>
-  <body class="noselect" align="center" style="background-color:white">
-     
+  <body class="noselect" align="center" style="background-color: white">
     <!--h2 style="color: teal;text-align:center;">Wi-Fi Camera &#128663; Control</h2-->
-    
 
-    
-    <table id="mainTable" style="width:400px;margin:auto;table-layout:fixed" CELLSPACING=10>
-      <tr>
-        <img id="cameraImage" src="" style="width:400px;height:250px"></td>
-      </tr> 
-      <tr>
-        <td></td>
-        <td class="button"
-      ontouchstart='sendButtonInput("MoveCar","1")'
-      ontouchend='sendButtonInput("MoveCar","0")'
-      onmousedown = 'sendButtonInput("MoveCar","1")'
-      onmouseup='sendButtonInput("MoveCar","0")'>
-      <span class="arrows">&#8679;</span>
-  </td>
-        <td></td>
-      </tr>
-      <tr>
-          <td class="button"
-      ontouchstart='sendButtonInput("MoveCar","3")'
-      ontouchend='sendButtonInput("MoveCar","0")'
-      onmousedown='sendButtonInput("MoveCar","3")'
-      onmouseup='sendButtonInput("MoveCar","0")'>
-      <span class="arrows">&#8678;</span>
-  </td>
-        <td class="button"></td>    
-        <td class="button"
-      ontouchstart='sendButtonInput("MoveCar","4")'
-      ontouchend='sendButtonInput("MoveCar","0")'
-      onmousedown='sendButtonInput("MoveCar","4")'
-      onmouseup='sendButtonInput("MoveCar","0")'>
-      <span class="arrows">&#8680;</span>
-  </td>
-      </tr>
+    <table
+      id="mainTable"
+      style="width: 400px; margin: auto; table-layout: fixed"
+      cellspacing="10"
+    >
+      <div>
+        <tr>
+          <img
+            id="cameraImage"
+            src=""
+            style="width: 250px; height: 400px; transform: rotate(90deg)"
+          />
+        </tr>
+      </div>
       <tr>
         <td></td>
-       <td class="button"
-      ontouchstart='sendButtonInput("MoveCar","2")'
-      ontouchend='sendButtonInput("MoveCar","0")'
-      onmousedown='sendButtonInput("MoveCar","2")'
-      onmouseup='sendButtonInput("MoveCar","0")'>
-      <span class="arrows">&#8681;</span>
-  </td>
+        <td
+          class="button"
+          id="top"
+          ontouchstart='sendButtonInput("MoveCar","1")'
+          ontouchend='sendButtonInput("MoveCar","0")'
+          onmousedown='sendButtonInput("MoveCar","1")'
+          onmouseup='sendButtonInput("MoveCar","0")'
+        >
+          <span class="arrows">&#8679;</span>
+        </td>
         <td></td>
       </tr>
-      <tr/><tr/>
       <tr>
-        <td style="text-align:left"><b>Speed:</b></td>
-        <td colspan=2>
-         <div class="slidecontainer">
-            <input type="range" min="0" max="255" value="150" class="slider" id="Speed" oninput='sendButtonInput("Speed",value)'>
+        <td
+          class="button"
+          id="left"
+          ontouchstart='sendButtonInput("MoveCar","3")'
+          ontouchend='sendButtonInput("MoveCar","0")'
+          onmousedown='sendButtonInput("MoveCar","3")'
+          onmouseup='sendButtonInput("MoveCar","0")'
+        >
+          <span class="arrows">&#8678;</span>
+        </td>
+        <td class="button"></td>
+        <td
+          class="button"
+          id="right"
+          ontouchstart='sendButtonInput("MoveCar","4")'
+          ontouchend='sendButtonInput("MoveCar","0")'
+          onmousedown='sendButtonInput("MoveCar","4")'
+          onmouseup='sendButtonInput("MoveCar","0")'
+        >
+          <span class="arrows">&#8680;</span>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td
+          class="button"
+          id="bottom"
+          ontouchstart='sendButtonInput("MoveCar","2")'
+          ontouchend='sendButtonInput("MoveCar","0")'
+          onmousedown='sendButtonInput("MoveCar","2")'
+          onmouseup='sendButtonInput("MoveCar","0")'
+        >
+          <span class="arrows">&#8681;</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr />
+      <tr />
+      <tr>
+        <td style="text-align: left"><b>Speed:</b></td>
+        <td colspan="2">
+          <div class="slidecontainer">
+            <input
+              type="range"
+              min="0"
+              max="255"
+              value="150"
+              class="slider"
+              id="Speed"
+              oninput='sendButtonInput("Speed",value)'
+            />
           </div>
         </td>
-      </tr>        
+      </tr>
       <tr>
-        <td style="text-align:left"><b>Light:</b></td>
-        <td colspan=2>
+        <td style="text-align: left"><b>Light:</b></td>
+        <td colspan="2">
           <div class="slidecontainer">
-            <input type="range" min="0" max="255" value="0" class="slider" id="Light" oninput='sendButtonInput("Light",value)'>
+            <input
+              type="range"
+              min="0"
+              max="255"
+              value="0"
+              class="slider"
+              id="Light"
+              oninput='sendButtonInput("Light",value)'
+            />
           </div>
-        </td>   
+        </td>
       </tr>
     </table>
-  
+
     <script>
+      //GAME PAD
+      const topBtn = document.getElementById("top");
+      const leftBtn = document.getElementById("left");
+      const rightBtn = document.getElementById("right");
+      const botBtn = document.getElementById("bottom");
+
+      let gamepadIndex = null;
+      let prevStates = [false, false, false, false, false, false, false, false];
+      let buttonEvent = [botBtn, rightBtn, leftBtn, topBtn];
+      const btnIds = [
+        "btnA",
+        "btnB",
+        "btnX",
+        "btnY",
+        "btnLB",
+        "btnRB",
+        "btnLT",
+        "btnRT",
+      ];
+
+      window.addEventListener("gamepadconnected", (e) => {
+        gamepadIndex = e.gamepad.index;
+        requestAnimationFrame(updateGamepad);
+      });
+
+      function updateInput(id, value) {
+        const input = document.getElementById(id);
+        input.value = value;
+
+        // Trigger input event
+        input.dispatchEvent(new Event("input"));
+      }
+      //DEFAULT value of speed and light
+      let defaultSpeedValue = 150;
+      let defaultLightValue = 0;
+      //
+
+      function updateGamepad() {
+        const gp = navigator.getGamepads()[gamepadIndex];
+        if (!gp) return;
+
+        // Control car by controller XYAB
+        for (let i = 0; i < 4; i++) {
+          const nowPressed = gp.buttons[i].pressed;
+          const wasPressed = prevStates[i];
+
+          // Pressed (rising edge)
+          if (nowPressed && !wasPressed) {
+            buttonEvent[i].dispatchEvent(new MouseEvent("mousedown"));
+          }
+
+          // Released (falling edge)
+          if (!nowPressed && wasPressed) {
+            buttonEvent[i].dispatchEvent(new MouseEvent("mouseup"));
+          }
+
+          // Save state
+          prevStates[i] = nowPressed;
+        }
+
+        //Control speed and light by trigger and button in controller
+
+        for (let i = 4; i < 8; i++) {
+          const nowPressed = gp.buttons[i].pressed;
+          const wasPressed = prevStates[i];
+
+          // Pressed (rising edge)
+          if (nowPressed && !wasPressed) {
+            switch (i) {
+              case 4:
+                if (defaultLightValue <= 0) defaultLightValue = 0;
+                else defaultLightValue -= 25;
+                updateInput("Light", defaultLightValue);
+                break;
+
+              case 5:
+                if (defaultLightValue >= 255) defaultLightValue = 255;
+                else defaultLightValue += 25;
+                updateInput("Light", defaultLightValue);
+                break;
+              case 6:
+                if (defaultSpeedValue <= 0) defaultSpeedValue = 0;
+                else defaultSpeedValue -= 25;
+                updateInput("Speed", defaultSpeedValue);
+                break;
+              case 7:
+                if (defaultSpeedValue >= 255) defaultSpeedValue = 255;
+                else defaultSpeedValue += 25;
+                updateInput("Speed", defaultSpeedValue);
+                break;
+              default:
+                break;
+            }
+          }
+
+          // Released (falling edge)
+          // if (!nowPressed && wasPressed) {
+          //   buttonEvent[i].dispatchEvent(
+          //     new MouseEvent("mouseup", { bubbles: true })
+          //   );
+          // }
+
+          // Save state
+          prevStates[i] = nowPressed;
+        }
+
+        requestAnimationFrame(updateGamepad);
+      }
+
       var webSocketCameraUrl = "ws:\/\/" + window.location.hostname + "/Camera";
-      var webSocketCarInputUrl = "ws:\/\/" + window.location.hostname + "/CarInput";      
+      var webSocketCarInputUrl =
+        "ws:\/\/" + window.location.hostname + "/CarInput";
       var websocketCamera;
       var websocketCarInput;
-      
-      function initCameraWebSocket() 
-      {
+
+      function initCameraWebSocket() {
         websocketCamera = new WebSocket(webSocketCameraUrl);
-        websocketCamera.binaryType = 'blob';
-        websocketCamera.onopen    = function(event){};
-        websocketCamera.onclose   = function(event){setTimeout(initCameraWebSocket, 2000);};
-        websocketCamera.onmessage = function(event)
-        {
+        websocketCamera.binaryType = "blob";
+        websocketCamera.onopen = function (event) {};
+        websocketCamera.onclose = function (event) {
+          setTimeout(initCameraWebSocket, 2000);
+        };
+        websocketCamera.onmessage = function (event) {
           var imageId = document.getElementById("cameraImage");
           imageId.src = URL.createObjectURL(event.data);
         };
       }
-      
-      function initCarInputWebSocket() 
-      {
+
+      function initCarInputWebSocket() {
         websocketCarInput = new WebSocket(webSocketCarInputUrl);
-        websocketCarInput.onopen    = function(event)
-        {
+        websocketCarInput.onopen = function (event) {
           var speedButton = document.getElementById("Speed");
           sendButtonInput("Speed", speedButton.value);
           var lightButton = document.getElementById("Light");
           sendButtonInput("Light", lightButton.value);
         };
-        websocketCarInput.onclose   = function(event){setTimeout(initCarInputWebSocket, 2000);};
-        websocketCarInput.onmessage = function(event){};        
+        websocketCarInput.onclose = function (event) {
+          setTimeout(initCarInputWebSocket, 2000);
+        };
+        websocketCarInput.onmessage = function (event) {};
       }
-      
-      function initWebSocket() 
-      {
-        initCameraWebSocket ();
+
+      function initWebSocket() {
+        initCameraWebSocket();
         initCarInputWebSocket();
       }
 
-      function sendButtonInput(key, value) 
-      {
+      function sendButtonInput(key, value) {
         console.log(key);
         console.log(value);
         var data = key + "," + value;
         websocketCarInput.send(data);
       }
 
-       var keyState = {};
+      var keyState = {};
 
-      document.addEventListener("keydown", function(event) {
-        if (keyState[event.code]) return; 
+      document.addEventListener("keydown", function (event) {
+        if (keyState[event.code]) return;
         keyState[event.code] = true;
 
-        switch(event.code) {
+        switch (event.code) {
           case "KeyW":
             sendButtonInput("MoveCar", "1"); // Tiến
             break;
@@ -280,27 +425,31 @@ const char *htmlHomePage PROGMEM = R"HTMLHOMEPAGE(
         }
       });
 
-      document.addEventListener("keyup", function(event) {
+      document.addEventListener("keyup", function (event) {
         if (!keyState[event.code]) return;
         delete keyState[event.code];
 
-        switch(event.code) {
+        switch (event.code) {
           case "KeyW":
           case "KeyS":
           case "KeyA":
           case "KeyD":
-            sendButtonInput("MoveCar", "0"); 
+            sendButtonInput("MoveCar", "0");
             break;
         }
       });
-    
+
       window.onload = initWebSocket;
-      document.getElementById("mainTable").addEventListener("touchend", function(event){
-        event.preventDefault()
-      });      
+      document
+        .getElementById("mainTable")
+        .addEventListener("touchend", function (event) {
+          event.preventDefault();
+        });
     </script>
-  </body>    
+  </body>
 </html>
+
+
 )HTMLHOMEPAGE";
 
 // control motor
